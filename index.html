@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Drum Volume Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hyundai+Sans:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Hyundai Sans', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #007BFF;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1em;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Horizontal Drum Volume Calculator</h1>
+    <h2>Created by Ade M.Y</h2>
+    <div class="form-group">
+        <label for="waterHeight">Enter Height of Water (cm):</label>
+        <input type="number" id="waterHeight" placeholder="Height in cm" required>
+    </div>
+    <button onclick="calculateVolume()">Calculate Volume</button>
+    <div id="result" class="form-group"></div>
+
+    <script>
+        function calculateVolume() {
+            const diameter = 58.1; // Inner diameter in cm
+            const radius = diameter / 2;
+            const length = 87.3; // Inner length in cm
+            const waterHeight = parseFloat(document.getElementById('waterHeight').value);
+            
+            if (waterHeight <= 0 || waterHeight > diameter) {
+                alert("Please enter a valid height between 0 and 58.1 cm.");
+                return;
+            }
+            
+            const theta = 2 * Math.acos((radius - waterHeight) / radius);
+            const segmentArea = 0.5 * radius * radius * (theta - Math.sin(theta));
+            const volume = segmentArea * length;
+            const volumeLiters = volume / 1000; // Convert cubic cm to liters
+            
+            document.getElementById('result').innerText = `Volume of water: ${volumeLiters.toFixed(2)} liters`;
+        }
+    </script>
+
+</body>
+</html>
